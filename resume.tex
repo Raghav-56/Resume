@@ -1,30 +1,18 @@
 \documentclass[10pt, letterpaper]{article}
 
-% Enhanced package configuration
+% Package configuration
+\usepackage[dvipsnames]{xcolor} % <-- Move this line up, before all other packages
 \usepackage[ignoreheadfoot,top=1.5cm,bottom=1.5cm,left=1.8cm,right=1.8cm,footskip=1.0cm]{geometry}
 \usepackage[explicit]{titlesec}
-\usepackage{tabularx}
-\usepackage{array}
-\usepackage[dvipsnames]{xcolor}
-\definecolor{primaryColor}{RGB}{30, 70, 160} % Deeper blue for better readability
+\usepackage{tabularx,array,multicol,enumitem,amsmath,lastpage,changepage,paracol,ifthen,needspace,iftex,ragged2e,setspace,tikz,microtype,xparse}
+\usepackage[colorlinks=true,urlcolor=primaryColor,linkcolor=primaryColor]{hyperref} % <-- move this up
+\usepackage{bookmark}
+\usepackage{fontawesome5}
+
+\definecolor{primaryColor}{RGB}{30, 70, 160}
 \definecolor{secondaryColor}{RGB}{70, 90, 180}
 \definecolor{accentColor}{RGB}{100, 120, 200}
-\definecolor{lightGray}{RGB}{240, 240, 240} % For skill bars
-\usepackage{enumitem}
-\usepackage{fontawesome5}
-\usepackage{amsmath}
-\usepackage[colorlinks=true,urlcolor=primaryColor,linkcolor=primaryColor]{hyperref}
-\usepackage{bookmark}
-\usepackage{lastpage}
-\usepackage{changepage}
-\usepackage{paracol}
-\usepackage{ifthen}
-\usepackage{needspace}
-\usepackage{iftex}
-\usepackage{ragged2e}
-\usepackage{setspace}
-\usepackage{tikz} % For skill bars
-\usepackage{multicol}
+\definecolor{lightGray}{RGB}{240, 240, 240}
 
 % Font configuration
 \ifPDFTeX
@@ -34,10 +22,8 @@
     \usepackage[utf8]{inputenc}
     \usepackage{lmodern}
 \fi
-
 \usepackage[default, type1]{sourcesanspro}
 
-% Enhanced template settings
 \AtBeginEnvironment{adjustwidth}{\partopsep0pt}
 \pagestyle{empty}
 \setcounter{secnumdepth}{0}
@@ -45,52 +31,69 @@
 \setlength{\topskip}{0pt}
 \setlength{\columnsep}{0.15cm}
 
-% Enhanced section formatting with left bar
+% Section formatting
 \titleformat{\section}{
     \needspace{4\baselineskip}
     \Large\color{primaryColor}
 }{}{}{\textbf{#1}\titlerule[1.2pt]}[]
-
 \titlespacing{\section}{0pt}{0.6cm}{0.4cm}
 
-% Enhanced environments
-\newenvironment{highlights}{
-    \begin{itemize}[topsep=0.10cm,parsep=0.10cm,partopsep=0pt,itemsep=0.10cm,leftmargin=0.4cm + 10pt]
-}{
-    \end{itemize}
-}
+% Custom lists
+\newlist{achievementlist}{itemize}{1}
+\newlist{experiencelist}{itemize}{1}
+\newlist{compactlist}{itemize}{1}
+\setlist[achievementlist]{leftmargin=0.5cm, label={\textcolor{secondaryColor}{$\bullet$}}, itemsep=0.05cm, parsep=0.05cm}
+\setlist[experiencelist]{leftmargin=0.5cm, label={\textcolor{primaryColor}{$\circ$}}, itemsep=0.05cm, parsep=0.05cm}
+\setlist[compactlist]{noitemsep, leftmargin=1em, label={\textcolor{secondaryColor}{$\bullet$}}}
 
-% Custom commands for consistent styling
+% Custom commands
 \newcommand{\skill}[2]{\textbf{#1:} #2}
 \newcommand{\achievement}[1]{\textcolor{secondaryColor}{\faAngleRight} \hspace{0.05cm}#1}
 \newcommand{\daterange}[1]{\hfill\textcolor{secondaryColor}{\textit{#1}}}
-
-% Custom command for skill bars
-\newcommand{\skillbar}[2]{
-    \textbf{#1} \hfill
+\NewDocumentCommand{\skillbar}{m m O{2.5cm}}{%
+    \begingroup
+    \setlength{\parskip}{0pt}
+    \makebox[\dimexpr#3\relax][l]{\textbf{#1}} 
     \begin{tikzpicture}[baseline=-0.5ex]
         \draw[lightGray, fill=lightGray, rounded corners=1pt] (0,0) rectangle (5,0.25);
-        \draw[primaryColor, fill=primaryColor, rounded corners=1pt] (0,0) rectangle (#2*5,0.25);
+        \pgfmathsetmacro{\filllength}{min(max(#2,0),1) * 5}
+        \draw[primaryColor, fill=primaryColor, rounded corners=1pt] (0,0) rectangle (\filllength,0.25);
     \end{tikzpicture}\\[-0.2cm]
+    \endgroup
 }
-
-% Experience item with improved formatting
+\NewDocumentCommand{\contactitem}{m m m}{%
+    {\csname #1\endcsname} \href{#2}{#3}%
+}
+\newcommand{\contactdivider}{\hspace{0.2cm}$\cdot$\hspace{0.2cm}}
+\NewDocumentEnvironment{experienceentry}{m m m}{%
+    \textbf{#1} | \textit{#2} \daterange{#3}
+    \begin{experiencelist}
+}{%
+    \end{experiencelist}
+}
+\NewDocumentEnvironment{educationentry}{m m}{%
+    \textbf{#1} \daterange{#2}\\
+}{%
+}
+\NewDocumentEnvironment{skillsection}{m}{%
+    \textbf{#1}
+    \begin{compactlist}
+}{%
+    \end{compactlist}
+}
 \newcommand{\experienceitem}[1]{\item[\textcolor{primaryColor}{\small\faCaretRight}] #1}
-
-% Custom header command
 \newcommand{\headernamestyle}[1]{{\fontsize{28pt}{32pt}\selectfont\textbf{#1}}}
 
-% Document begins
 \begin{document}
 
 % Enhanced Header with light background
 \begin{center}
     \headernamestyle{Raghav Gupta}\\[0.25cm]
     \footnotesize
-    {\faMapMarker*} Zirakpur, Punjab, 140603 \hspace{0.2cm}$\cdot$\hspace{0.2cm}
-    {\faEnvelope[regular]} \href{mailto:raghavrgupta56@gmail.com}{raghavrgupta56@gmail.com} \hspace{0.2cm}$\cdot$\hspace{0.2cm}
-    {\faLinkedin} \href{https://linkedin.com/in/raghav-gupta-035b4a292}{linkedin.com/in/raghav-gupta-035b4a292} \hspace{0.2cm}$\cdot$\hspace{0.2cm}
-    {\faGithub} \href{https://github.com/Raghav-56}{github.com/Raghav-56}
+    {\faMapMarker*} Zirakpur, Punjab, 140603 \contactdivider
+    \contactitem{faEnvelope[regular]}{mailto:raghavrgupta56@gmail.com}{raghavrgupta56@gmail.com} \contactdivider
+    \contactitem{faLinkedin}{https://linkedin.com/in/raghav-gupta-035b4a292}{linkedin.com/in/raghav-gupta-035b4a292} \contactdivider
+    \contactitem{faGithub}{https://github.com/Raghav-56}{github.com/Raghav-56}
 \end{center}
 
 % Summary with improved formatting
@@ -101,109 +104,102 @@ Second-year Engineering student focused on AI/ML applications in computer vision
 
 % Education with enhanced formatting
 \section{Education}
-\textbf{Bachelor of Engineering in Information Technology} \daterange{2023 -- 2027}\\
+\begin{educationentry}{Bachelor of Engineering in Information Technology}{2023 -- 2027}
 \textit{University Institute of Engineering and Technology, Panjab University}
-\begin{itemize}[leftmargin=0.5cm, label={\textcolor{secondaryColor}{$\bullet$}}]
+\begin{achievementlist}
     \item 2nd Year Student
     \item Reliance Foundation Undergraduate Scholar
-\end{itemize}
+\end{achievementlist}
+\end{educationentry}
 
 % Experience with enhanced formatting
 \section{Professional Experience}
-\textbf{AI/ML Developer} | \textit{Design Innovation Centre (DIC)} \daterange{Jan 2024 -- Present}
-\begin{itemize}[leftmargin=0.5cm, label={\textcolor{primaryColor}{$\circ$}}]
+\begin{experienceentry}{AI/ML Developer}{Design Innovation Centre (DIC)}{Jan 2024 -- Present}
     \item Developed computer vision pipelines using OpenCV and NumPy for keyframe extraction and video augmentation, supporting model training for industrial automation tasks.
     \item Built and optimized facial emotion recognition systems using Action Unit detection with pretrained DL models, improving inference accuracy by 15\%.
     \item Fine-tuned and deployed domain-specific Large Language Models (LLMs) using HuggingFace Transformers and PyTorch for industrial document understanding and response generation.
-\end{itemize}
+\end{experienceentry}
 
-\textbf{ML Developer} | \textit{FoSS Hack Hackathon – RaG System} \daterange{Feb 2024}
-\begin{itemize}[leftmargin=0.5cm, label={\textcolor{primaryColor}{$\circ$}}]
+\begin{experienceentry}{ML Developer}{FoSS Hack Hackathon – RaG System}{Feb 2024}
     \item Designed and implemented a RaG system using FAISS and LLMs to extract insights from business documents, enabling automated decision support for industrial clients.
     \item Collaborated in a team of 4 to deliver a functional prototype within 24 hours; project selected among top 10 solutions.
-\end{itemize}
+\end{experienceentry}
 
 % Technical Skills with visual improvements
 \section{Technical Skills}
 \begin{minipage}{\linewidth}
 \begin{multicols}{2}
     % Left column
-    \textbf{Programming Languages}
-    \begin{itemize}[noitemsep,leftmargin=1em]
+    \begin{skillsection}{Programming Languages}
         \item Python, C, C++, JavaScript
         \item Learning: Rust, Haskell
-    \end{itemize}
+    \end{skillsection}
     
-    \textbf{Libraries \& Frameworks}
-    \begin{itemize}[noitemsep,leftmargin=1em]
+    \begin{skillsection}{Libraries \& Frameworks}
         \item PyTorch, TensorFlow
         \item HuggingFace Transformers
         \item OpenCV, Scikit-learn
         \item Pandas, NumPy, FAISS
-    \end{itemize}
+    \end{skillsection}
 
     % Right column
     \columnbreak
-    \textbf{Development Tools}
-    \begin{itemize}[noitemsep,leftmargin=1em]
+    \begin{skillsection}{Development Tools}
         \item Git, GitHub Actions
         \item Docker, VS Code, WSL
         \item Jupyter, LaTeX, Colab
-    \end{itemize}
+    \end{skillsection}
     
-    \textbf{Domain Expertise}
-    \begin{itemize}[noitemsep,leftmargin=1em]
+    \begin{skillsection}{Domain Expertise}
         \item Machine Learning
         \item LLM Fine-tuning, RaG
         \item Video Processing
         \item Cybersecurity
-    \end{itemize}
+    \end{skillsection}
 \end{multicols}
 \end{minipage}
 
 % Open Source Contributions with better formatting
 \section{Open Source Contributions}
-\begin{itemize}[leftmargin=0.5cm, label={\textcolor{secondaryColor}{$\bullet$}}]
+\begin{achievementlist}
     \item Active GitHub contributor with 428+ commits in the past year across ML tools, automation scripts, and student-focused repositories.
     \item Developed and maintained public repositories with 50+ stars, including tools for model evaluation and dataset curation.
-\end{itemize}
+\end{achievementlist}
 
 % Certifications & Training with improved spacing
 \section{Certifications \& Training}
-\begin{itemize}[leftmargin=0.5cm, label={\textcolor{secondaryColor}{$\bullet$}}]
+\begin{achievementlist}
     \item \textbf{Machine Learning by Andrew Ng} -- Coursera \hfill \textit{Completed}
     \item \textbf{Understanding Machine Learning} by Shai Shalev-Shwartz \hfill \textit{In Progress}
     \item \textbf{Deep Learning Specialization} -- Coursera \hfill \textit{In Progress}
-\end{itemize}
+\end{achievementlist}
 
 % Achievements with enhanced bullet points
 \section{Achievements}
-\begin{itemize}[leftmargin=0.5cm, label={\textcolor{secondaryColor}{$\bullet$}}]
+\begin{achievementlist}
     \item Participated in Global Hack Week AI and Beginners by Major League Hacking.
     \item Finalist at FoSS Hack Chandigarh 2024 for an AI-based business tool.
-\end{itemize}
+\end{achievementlist}
 
 % Additional Information with improved layout
 \section{Additional Information}
 \begin{minipage}{\linewidth}
 \begin{multicols}{2}
     % Left column
-    \textbf{Research Interests}
-    \begin{itemize}[noitemsep,leftmargin=1em]
+    \begin{skillsection}{Research Interests}
         \item AI/ML, LLMs
         \item Video Processing
         \item Speech Analysis
-    \end{itemize}
+    \end{skillsection}
     
     % Right column
     \columnbreak
-    \textbf{Soft Skills}
-    \begin{itemize}[noitemsep,leftmargin=1em]
+    \begin{skillsection}{Soft Skills}
         \item Problem-solving
         \item Critical Thinking
         \item Team Leadership
         \item Technical Communication
-    \end{itemize}
+    \end{skillsection}
 \end{multicols}
 
 \textbf{Future Interests:} Quantum Computing, Web3, Blockchain, AGI, Energy Tech
