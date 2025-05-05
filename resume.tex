@@ -44,7 +44,12 @@
 \newlist{compactlist}{itemize}{1}
 \setlist[achievementlist]{leftmargin=0.5cm, label={\textcolor{secondaryColor}{$\bullet$}}, itemsep=0.05cm, parsep=0.05cm}
 \setlist[experiencelist]{leftmargin=0.5cm, label={\textcolor{primaryColor}{$\circ$}}, itemsep=0.05cm, parsep=0.05cm}
-\setlist[compactlist]{noitemsep, leftmargin=1em, label={\textcolor{secondaryColor}{$\bullet$}}}
+\setlist[compactlist]{
+    itemsep=0.1cm,
+    parsep=0.05cm,
+    leftmargin=1.5em,
+    label={\textcolor{secondaryColor}{$\bullet$}}
+}
 
 % Custom commands
 \newcommand{\skill}[2]{\textbf{#1:} #2}
@@ -76,7 +81,7 @@
 }{%
 }
 \NewDocumentEnvironment{skillsection}{m}{%
-    \textbf{#1}
+    \textbf{#1}\vspace{0.1cm} % Add small space after title
     \begin{compactlist}
 }{%
     \end{compactlist}
@@ -86,12 +91,16 @@
 
 \begin{document}
 
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[lightGray, opacity=0.3] (current page.north west) rectangle ([yshift=-2.5cm]current page.north east);
+\end{tikzpicture}
+
 % Header with light background
 \begin{center}
     \headernamestyle{Raghav Gupta}\\[0.25cm]
     \footnotesize
     {\faMapMarker*} Zirakpur, Punjab, 140603 \contactdivider
-    \contactitem{faEnvelope[regular]}{mailto:raghavrgupta56@gmail.com}{raghavrgupta56@gmail.com} \contactdivider
+    \contactitem{faEnvelope}{mailto:raghavrgupta56@gmail.com}{raghavrgupta56@gmail.com} \contactdivider
     \contactitem{faLinkedin}{https://linkedin.com/in/raghav-gupta-035b4a292}{linkedin.com/in/raghav-gupta-035b4a292} \contactdivider
     \contactitem{faGithub}{https://github.com/Raghav-56}{github.com/Raghav-56}
 \end{center}
@@ -99,7 +108,7 @@
 % About / Introduction
 \section{About}
 \begin{minipage}{\linewidth}
-Second-year Engineering student focused on AI/ML applications in computer vision and retrieval-augmented generation (RaG). Experience includes building video analysis pipelines, fine-tuning LLMs, and implementing RaG systems for document analysis. Eager to contribute to real-world industrial AI applications with a passion for innovation and rapid learning.
+Second-year Engineering student focused on AI/ML applications development of Agentic systems. Experience includes fine-tuning LLMs, implementing RaG systems, working on Video processing. Eager to contribute to real-world industrial AI applications with a passion for innovation and rapid learning.
 \end{minipage}
 
 % Education
@@ -115,14 +124,17 @@ Second-year Engineering student focused on AI/ML applications in computer vision
 % Experience
 \section{Experience}
 \begin{experienceentry}{AI/ML Developer}{Design Innovation Centre (DIC)}{Jan 2024 -- Present}
-    \item Developed computer vision pipelines using OpenCV and NumPy for keyframe extraction and video augmentation, supporting model training for industrial automation tasks.
-    \item Built and optimized facial emotion recognition systems using Action Unit detection with pretrained DL models, improving inference accuracy by 15\%.
-    \item Fine-tuned and deployed domain-specific Large Language Models (LLMs) using HuggingFace Transformers and PyTorch for industrial document understanding and response generation.
+    \item Developed computer vision pipelines using OpenCV, Ffmpeg, imgaug, etc. for keyframe extraction and video augmentation, supporting model training and making it more efficient.
+    \item Built and optimized facial emotion recognition systems using Action Unit detection with pretrained DL models, improving inference accuracy.
+    \item Fine-tuned and deployed domain-specific Large Language Models (LLMs) using HuggingFace Transformers and PyTorch for document understanding and response generation.
 \end{experienceentry}
 
-\begin{experienceentry}{ML Developer}{FoSS Hack Hackathon – RaG System}{Feb 2024}
+\begin{experienceentry}{ML Developer}{Hackathons – RaG Systems}{Feb 2024}
     \item Designed and implemented a RaG system using FAISS and LLMs to extract insights from business documents, enabling automated decision support for industrial clients.
-    \item Collaborated in a team of 4 to deliver a functional prototype within 24 hours; project selected among top 10 solutions.
+\end{experienceentry}
+
+\begin{experienceentry}{Open Source Contributor}{GitHub Projects}{2020 -- Present}
+    \item Active GitHub contributor with 500+ commits in the past years across ML tools, automation scripts, and student-focused repositories.
 \end{experienceentry}
 
 % Technical Skills
@@ -131,15 +143,19 @@ Second-year Engineering student focused on AI/ML applications in computer vision
 \begin{multicols}{2}
     % Left column
     \begin{skillsection}{Programming Languages}
-        \item Python, C, C++, JavaScript
-        \item Learning: Rust, Haskell
+        \item \begin{minipage}[t]{\linewidth}
+                Python, C, C++, JavaScript, TypeScript, \\ Rust, Haskell, SQL
+              \end{minipage}
     \end{skillsection}
     
+    \vspace{\medskipamount}
+
     \begin{skillsection}{Libraries \& Frameworks}
         \item PyTorch, TensorFlow
         \item HuggingFace Transformers
         \item OpenCV, Scikit-learn
         \item Pandas, NumPy, FAISS
+        \item HTML5, CSS3
     \end{skillsection}
 
     \columnbreak
@@ -148,63 +164,18 @@ Second-year Engineering student focused on AI/ML applications in computer vision
     \begin{skillsection}{Development Tools}
         \item Git, GitHub Actions
         \item Docker, VS Code, WSL
-        \item Jupyter, LaTeX, Colab
+        \item Jupyter, LaTeX, Colab, Kaggle
     \end{skillsection}
     
+    \vspace{\medskipamount}
+
     \begin{skillsection}{Domain Expertise}
         \item Machine Learning
-        \item LLM Fine-tuning, RaG
+        \item LLM Fine-tuning
+        \item RaG
         \item Video Processing
-        \item Cybersecurity
     \end{skillsection}
 \end{multicols}
-\end{minipage}
-
-% Open Source Contributions
-\section{Open Source Contributions}
-\begin{achievementlist}
-    \item Active GitHub contributor with 428+ commits in the past year across ML tools, automation scripts, and student-focused repositories.
-    \item Developed and maintained public repositories with 50+ stars, including tools for model evaluation and dataset curation.
-\end{achievementlist}
-
-% Certifications & Training
-\section{Certifications \& Training}
-\begin{achievementlist}
-    \item \textbf{Machine Learning by Andrew Ng} -- Coursera \hfill \textit{Completed}
-    \item \textbf{Understanding Machine Learning} by Shai Shalev-Shwartz \hfill \textit{In Progress}
-    \item \textbf{Deep Learning Specialization} -- Coursera \hfill \textit{In Progress}
-\end{achievementlist}
-
-% Achievements
-\section{Achievements}
-\begin{achievementlist}
-    \item Participated in Global Hack Week AI and Beginners by Major League Hacking.
-    \item Finalist at FoSS Hack Chandigarh 2024 for an AI-based business tool.
-\end{achievementlist}
-
-% Additional Information
-\section{Additional Information}
-\begin{minipage}{\linewidth}
-\begin{multicols}{2}
-    % Left column
-    \begin{skillsection}{Research Interests}
-        \item AI/ML, LLMs
-        \item Video Processing
-        \item Speech Analysis
-    \end{skillsection}
-    
-    \columnbreak
-
-    % Right column
-    \begin{skillsection}{Soft Skills}
-        \item Problem-solving
-        \item Critical Thinking
-        \item Team Leadership
-        \item Technical Communication
-    \end{skillsection}
-\end{multicols}
-
-\textbf{Future Interests:} Quantum Computing, Web3, Blockchain, AGI, Energy Tech
 \end{minipage}
 
 \end{document}
