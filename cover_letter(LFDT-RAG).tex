@@ -1,14 +1,21 @@
 \documentclass[10pt, letterpaper]{article}
 
 % Package configuration
+% Basic document setup and layout packages
 \usepackage[dvipsnames]{xcolor}
-\usepackage[ignoreheadfoot,top=1.5cm,bottom=1.5cm,left=1.0cm,right=1.0cm,footskip=1.0cm]{geometry}
+\usepackage[ignoreheadfoot,top=2cm,bottom=1.5cm,left=1.5cm,right=1.5cm,footskip=1.0cm]{geometry}
 \usepackage[explicit]{titlesec}
+% Utility packages for formatting, math, and advanced typography
 \usepackage{tabularx,array,multicol,enumitem,amsmath,lastpage,changepage,paracol,ifthen,needspace,iftex,ragged2e,setspace,tikz,microtype,xparse}
 \usepackage[colorlinks=true,urlcolor=primaryColor,linkcolor=primaryColor]{hyperref}
 \usepackage{bookmark}
 \usepackage{fontawesome5}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{listings}
 
+% Color scheme
 \definecolor{primaryColor}{RGB}{30, 70, 160}
 \definecolor{secondaryColor}{RGB}{70, 90, 180}
 \definecolor{accentColor}{RGB}{100, 120, 200}
@@ -33,25 +40,41 @@
 
 % Section formatting
 \titleformat{\section}{
-    \needspace{4\baselineskip}
-    \Large\color{primaryColor}
-}{}{}{\textbf{#1}\titlerule[1.2pt]}[]
-\titlespacing{\section}{0pt}{0.6cm}{0.4cm}
+    \needspace{1.5\baselineskip}
+    \normalsize\color{primaryColor}
+}{}{}{\textbf{#1}}[]
+\titlespacing{\section}{0pt}{0.35cm}{0.15cm}
+
+% Subsection formatting for proposal
+\titleformat{\subsection}{
+    \needspace{1.5\baselineskip}
+    \normalsize\color{secondaryColor}
+}{}{}{\textit{#1}}[]
+\titlespacing{\subsection}{0pt}{0.3cm}{0.15cm}
 
 % Custom lists
-\newlist{achievementlist}{itemize}{1}
-\newlist{experiencelist}{itemize}{1}
-\newlist{compactlist}{itemize}{1}
-\setlist[achievementlist]{leftmargin=0.5cm, label={\textcolor{secondaryColor}{$\bullet$}}, itemsep=0.05cm, parsep=0.05cm}
-\setlist[experiencelist]{leftmargin=0.5cm, label={\textcolor{primaryColor}{$\circ$}}, itemsep=0.05cm, parsep=0.05cm}
-\setlist[compactlist]{
+\newlist{proposallist}{itemize}{1}
+\setlist[proposallist]{
+    leftmargin=1.5em,
     itemsep=0.1cm,
     parsep=0.05cm,
-    leftmargin=1.5em,
-    label={\textcolor{secondaryColor}{$\bullet$}}
+    topsep=0.05cm,
+    label={\textcolor{primaryColor}{$\bullet$}}
 }
 
-% Custom commands
+% Custom paragraph spacing and section environment
+% Creates consistent spacing and formatting for proposal sections with proper margins
+\newenvironment{proposalsection}{
+    \begin{spacing}{1.05}
+    \begin{minipage}{\linewidth}
+    \setlength{\parskip}{0.15cm}
+}{
+    \end{minipage}
+    \end{spacing}
+    \vspace{0.05cm}}
+
+% Custom commands for formatting text elements
+% These commands handle skills, achievements, and date formatting
 \newcommand{\skill}[2]{\textbf{#1:} #2}
 \newcommand{\achievement}[1]{\textcolor{secondaryColor}{\faAngleRight} \hspace{0.05cm}#1}
 \newcommand{\daterange}[1]{\hfill\textcolor{secondaryColor}{\textit{#1}}}
@@ -69,7 +92,7 @@
 \NewDocumentCommand{\contactitem}{m m m}{%
     {\csname #1\endcsname} \href{#2}{#3}%
 }
-\newcommand{\contactdivider}{\hspace{0.2cm}$\cdot$\hspace{0.2cm}}
+\newcommand{\contactdivider}{\hspace{0.125cm}$\cdot$\hspace{0.125cm}}
 \NewDocumentEnvironment{experienceentry}{m m m}{%
     \textbf{#1} | \textit{#2} \daterange{#3}
     \begin{experiencelist}
@@ -87,28 +110,120 @@
     \end{compactlist}
 }
 \newcommand{\experienceitem}[1]{\item[\textcolor{primaryColor}{\small\faCaretRight}] #1}
-\newcommand{\headernamestyle}[1]{{\fontsize{28pt}{32pt}\selectfont\textbf{#1}}}
+\newcommand{\headernamestyle}[1]{{\fontsize{32pt}{36pt}\selectfont\textbf{#1}}}
+
+% Date command
+\newcommand{\proposaldate}[1]{\vspace{0cm}\hfill\textit{#1}\vspace{1.0cm}}
+
+% Media handling commands - for embedding images, code samples, and figures
+% Provides consistent formatting for various types of media content
+\newcommand{\image}[3][1.0]{%
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=#1\textwidth]{#2}
+        \caption{#3}
+    \end{figure}
+}
+
+\newcommand{\inlineimage}[2][0.3]{%
+    \begin{wrapfigure}{r}{#1\textwidth}
+        \includegraphics[width=\linewidth]{#2}
+    \end{wrapfigure}
+}
+
+\newcommand{\codeblock}[2][]{%
+    \begin{lstlisting}[language=#1]
+#2
+    \end{lstlisting}
+}
+
+% Letter-style formatting
+\newcommand{\recipient}[1]{\textbf{#1}\\\vspace{0.3cm}}
+\newcommand{\salutation}[1]{#1,\\\vspace{0.1cm}}
+\newcommand{\closing}[1]{\vspace{0.2cm}\noindent #1,\\[0.2cm]}
 
 \begin{document}
 
+% Document header with shaded background effect and professional formatting
+% Creates a subtle visual hierarchy for the document header
 \begin{tikzpicture}[remember picture, overlay]
-  \fill[lightGray, opacity=0.3] (current page.north west) rectangle ([yshift=-2.5cm]current page.north east);
+  \fill[lightGray, opacity=0.2] (current page.north west) rectangle ([yshift=-3.0cm]current page.north east);
 \end{tikzpicture}
 
-% Header with light background
+% Header with light background and date
 \begin{center}
-    \headernamestyle{Raghav Gupta}\\[0.25cm]
-    \footnotesize
-    {\faMapMarker*} Zirakpur, Punjab, 140603 \contactdivider
+    \headernamestyle{Raghav Gupta}\\[0.2cm]
+    \begin{tabularx}{\linewidth}{@{}X@{}}
+    \centering
+    \normalsize
     \contactitem{faEnvelope}{mailto:raghavrgupta56@gmail.com}{raghavrgupta56@gmail.com} \contactdivider
+    \contactitem{faPhone}{tel:+917973457736}{+91 7973457736}
+    \end{tabularx}
+    \begin{tabularx}{\linewidth}{@{}X@{}}
+    \centering
+    \normalsize
+    {\faMapMarker*} Zirakpur, Punjab, 140603 \contactdivider
     \contactitem{faLinkedin}{https://linkedin.com/in/raghav-gupta-035b4a292}{linkedin.com/in/raghav-gupta-035b4a292} \contactdivider
     \contactitem{faGithub}{https://github.com/Raghav-56}{github.com/Raghav-56}
+    \end{tabularx}
 \end{center}
 
-% About / Introduction
-\section{About}
-\begin{minipage}{\linewidth}
-Second-year Engineering student focused on AI/ML applications development of Agentic systems. Experience includes fine-tuning LLMs, implementing RaG systems, working on Video processing. Eager to contribute to real-world industrial AI applications with a passion for innovation and rapid learning.
-\end{minipage}
+\proposaldate{May 13, 2025}
+
+\recipient{To the LFX LFDT Project Mentors and Selection Committee}
+
+\noindent Dear Mentors,
+\vspace{0.2cm}
+
+I am writing to express my strong interest in the LFX Mentorship Project \href{https://mentorship.lfx.linuxfoundation.org/project/addee2e8-5e60-47f0-bedb-b4d687f4fa52}{LFDT - Multi-Agent RAG (Retrieval-Augmented Generation) for AIFAQ}. I discovered this opportunity through active participation in the Linux Foundation community and continuous engagement with open-source initiatives.
+
+\section{Project Understanding}
+\begin{proposalsection}
+The project aims to revolutionize legacy data utilization through modern RAG systems. I bring relevant experience in:
+
+\begin{proposallist}
+\item Implementation of RAG systems for complex data processing
+\item Development of multi-agent architectures
+\item Open-source collaboration and documentation
+\end{proposallist}
+\end{proposalsection}
+
+\section{Proposed Implementation}
+\begin{proposalsection}
+My approach to the project includes:
+
+\subsection{Technical Architecture}
+\begin{proposallist}
+\item Integration of legacy data sources with modern RAG frameworks
+\item Optimization of retrieval mechanisms for various data formats
+\item Implementation of quality assurance measures for data processing
+\end{proposallist}
+
+\subsection{Development Timeline}
+I commit to 15 hours weekly throughout the mentorship (June - November 2025):
+\begin{proposallist}
+\item Weeks 1-2: Architecture design and setup
+\item Weeks 3-6: Core RAG implementation
+\item Weeks 7-12: Feature development
+\item Weeks 13-20: Testing and documentation
+\end{proposallist}
+\end{proposalsection}
+
+\section{Expected Contributions}
+\begin{proposalsection}
+This mentorship will enable me to:
+\begin{proposallist}
+\item Develop a production-grade RAG system
+\item Create comprehensive documentation
+\item Contribute to the open-source ecosystem
+\item Learn from experienced mentors
+\end{proposallist}
+\end{proposalsection}
+
+\closing{Sincerely}
+\textbf{Raghav Gupta}
+
+\vspace{0.2cm}
+\emph{Note: I am prepared to provide additional documentation, code samples, or participate in technical discussions as needed.}
 
 \end{document}
