@@ -1,6 +1,6 @@
 # Resume
 
-This repository contains the LaTeX source code for my professional resume.
+This repository contains the LaTeX source code for my Resume.
 
 ## Features
 
@@ -17,6 +17,7 @@ This repository contains the LaTeX source code for my professional resume.
    pdflatex resume.tex
    ```
 3. The output will be `resume.pdf`.
+4. Or use [Overleaf](https://www.overleaf.com/).
 
 ## Customization
 
@@ -25,5 +26,5 @@ This repository contains the LaTeX source code for my professional resume.
 
 ## License
 
-This project is for personal use. Feel free to use the template for your own resume.
-though, I'd really appreciate it if you could give me credit in your project.
+This is for personal use. Feel free to use the template for your own resume.
+Though, I'd really appreciate it if you could give me credit, even a thank you makes my day.
