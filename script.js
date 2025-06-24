@@ -1,27 +1,30 @@
-// Global configuration
 const resumeFilePath = 'Resume_Raghav-Gupta.pdf';
 
-// Check if the device is mobile
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     document.getElementById('mobileNotice').style.display = 'block';
 }
 
-// Update all resume links on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Update download button
+
     const downloadBtn = document.querySelector('.actions a[download]');
     if (downloadBtn) {
         downloadBtn.href = resumeFilePath;
     }
 
-    // Update PDF object embed
     const pdfEmbed = document.querySelector('.pdf-embed');
     if (pdfEmbed) {
-        pdfEmbed.setAttribute('data', resumeFilePath);
+        pdfEmbed.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent("https://raw.githubusercontent.com/Raghav-56/Resume/main/Resume_Raghav-Gupta.pdf")}`;
+        
+        // pdfEmbed.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/') + resumeFilePath)}`;
+
+        // pdfEmbed.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent("https://github.com/Raghav-56/Resume/blob/main/Resume_Raghav-Gupta.pdf")}`;
+
+        // pdfEmbed.setAttribute('data', resumeFilePath);
     }
 
     // Update fallback link
-    const fallbackLink = document.querySelector('.pdf-container a');
+    const fallbackLink = document.querySelector('#fallback-download');
+    // const fallbackLink = document.querySelector('.pdf-container a');
     if (fallbackLink) {
         fallbackLink.href = resumeFilePath;
     }

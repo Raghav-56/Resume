@@ -156,15 +156,46 @@ header p {
     height: 1000px;
     overflow: scroll;
     scrollbar-width: none;
-    border: 1px solid var(--light-gray);
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    background-color: var(--white);
-    box-shadow: 0 8px 32px rgba(30, 70, 160, 0.1);
+    border: none;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+    box-shadow: 
+        0 20px 60px rgba(30, 70, 160, 0.12),
+        0 8px 20px rgba(30, 70, 160, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    position: relative;
+    margin: var(--space-xl) 0;
+    padding: var(--space-md);
 }
+
+.pdf-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(30, 70, 160, 0.02) 25%, 
+        transparent 25%, 
+        transparent 75%, 
+        rgba(30, 70, 160, 0.02) 75%);
+    background-size: 20px 20px;
+    border-radius: var(--radius-lg);
+    pointer-events: none;
+}
+
 .pdf-embed {
     width: 100%;
-    height: 100%;
+    height: calc(100% - var(--space-xl));
     border: none;
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        0 2px 8px rgba(0, 0, 0, 0.06);
+    position: relative;
+    z-index: 1;
 }
 
 .actions {
@@ -344,7 +375,9 @@ footer p {
     }
     
     .pdf-container {
-        height: 500px;
+        height: 600px;
+        margin: var(--space-lg) 0;
+        padding: var(--space-sm);
     }
     
     .actions {
