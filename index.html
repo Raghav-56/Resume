@@ -24,6 +24,8 @@
     <meta name="keywords" content="Raghav Gupta, Resume, AI Developer, ML Developer, Engineering Student">
     <meta name="author" content="Raghav Gupta">
 
+    <link rel="preload" href="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent("https://raw.githubusercontent.com/Raghav-56/Resume/main/Resume_Raghav-Gupta.pdf")}" as="document">
+
 </head>
 
 <body>
@@ -57,6 +59,7 @@
         </div>
 
         <div class="pdf-container">
+            <div id="loadingSpinner" class="loading-spinner">Loading...</div>
             <iframe class="pdf-embed" src="" frameborder="0" loading="lazy">
                 <p>It appears your browser doesn't support PDF viewing. You can <a href="#" id="fallback-download">download the PDF</a> instead.</p>
             </iframe>

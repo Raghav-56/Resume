@@ -12,8 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const pdfEmbed = document.querySelector('.pdf-embed');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+
     if (pdfEmbed) {
+        loadingSpinner.style.display = 'block';
         pdfEmbed.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent("https://raw.githubusercontent.com/Raghav-56/Resume/main/Resume_Raghav-Gupta.pdf")}`;
+        pdfEmbed.onload = () => {
+            loadingSpinner.style.display = 'none';
+            pdfEmbed.style.display = 'block';
+        };
         
         // pdfEmbed.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/') + resumeFilePath)}`;
 
