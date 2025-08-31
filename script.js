@@ -16,17 +16,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (pdfEmbed) {
         loadingSpinner.style.display = 'block';
-        pdfEmbed.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent("https://raw.githubusercontent.com/Raghav-56/Resume/main/Resume_Raghav-Gupta.pdf")}`;
+        
+        // Try direct PDF embedding first
+        pdfEmbed.src = resumeFilePath;
+        
         pdfEmbed.onload = () => {
             loadingSpinner.style.display = 'none';
             pdfEmbed.style.display = 'block';
         };
         
-        // pdfEmbed.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/') + resumeFilePath)}`;
-
-        // pdfEmbed.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent("https://github.com/Raghav-56/Resume/blob/main/Resume_Raghav-Gupta.pdf")}`;
-
-        // pdfEmbed.setAttribute('data', resumeFilePath);
+        // Enhanced error handling for PDF loading
+        pdfEmbed.onerror = () => {
+            loadingSpinner.style.display = 'none';
+            pdfEmbed.style.display = 'none';
+            
+            // Show fallback
+            const fallbackDiv = document.getElementById('pdf-fallback');
+            if (fallbackDiv) {
+                fallbackDiv.style.display = 'block';
+            }
+        };
+        
+        // Alternative: If direct embedding fails, try PDF.js after a delay
+        setTimeout(() => {
+            if (pdfEmbed.style.display !== 'block') {
+                const localPdfUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/') + resumeFilePath;
+                pdfEmbed.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(localPdfUrl)}`;
+            }
+        }, 3000);
     }
 
     // Update fallback link
