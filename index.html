@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.85">
 
     <title>Raghav Gupta - Resume</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="styles.css">
 
     <link rel="icon" href="favicon/favicon.ico" type="image/x-icon">
@@ -24,8 +24,9 @@
     <meta name="keywords" content="Raghav Gupta, Resume, AI Developer, ML Developer, Engineering Student">
     <meta name="author" content="Raghav Gupta">
 
-    <link rel="preload" href="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent("https://raw.githubusercontent.com/Raghav-56/Resume/main/Resume_Raghav-Gupta.pdf")}" as="document">
-
+    <link rel="preload" href="https://raw.githubusercontent.com/Raghav-56/Resume/main/Resume_Raghav-Gupta.pdf" 
+          as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="https://mozilla.github.io/pdf.js/web/viewer.html" as="document">
 </head>
 
 <body>
@@ -35,10 +36,10 @@
             <h1>Raghav Gupta</h1>
             <p>AI/ML Engineer • Web Developer • Student</p>
         </header>
-        
+
         <div class="tagline-section">
             <p class="tagline">
-                Passionate computer science student specializing in artificial intelligence and machine learning, 
+                Passionate computer science student specializing in artificial intelligence and machine learning,
                 with hands-on experience in building AI Agents and modern web applications.
             </p>
             <div class="highlights">
@@ -48,12 +49,12 @@
                 <span class="highlight-item">Computer Science Student</span>
             </div>
         </div>
-        
+
         <div class="actions">
             <a href="#" class="btn" download>Download Resume (PDF)</a>
             <a href="mailto:raghavrgupta56@gmail.com" class="btn btn-secondary">Contact Me</a>
         </div>
-        
+
         <div class="mobile-notice" id="mobileNotice">
             📱 For the best viewing experience on mobile, consider downloading the PDF version.
         </div>
@@ -61,14 +62,15 @@
         <div class="pdf-container">
             <div id="loadingSpinner" class="loading-spinner">Loading...</div>
             <iframe class="pdf-embed" src="" frameborder="0" loading="lazy">
-                <p>It appears your browser doesn't support PDF viewing. You can <a href="#" id="fallback-download">download the PDF</a> instead.</p>
+                <p>It appears your browser doesn't support PDF viewing. You can <a href="#"
+                        id="fallback-download">download the PDF</a> instead.</p>
             </iframe>
 
             <!-- <object class="pdf-embed" data="#" type="application/pdf" loading="lazy">
                 <p>It appears your browser doesn't support embedded PDFs. You can <a href="#">download the PDF</a> instead.</p>
             </object> -->
         </div>
-        
+
         <div class="contact-links">
             <h3 class="contact-links-title">Let's Connect</h3>
             <div class="contact-links-container">
@@ -83,7 +85,7 @@
                 </a>
             </div>
         </div>
-        
+
         <footer>
             <div class="footer-content">
                 <p>&copy; 2025 Raghav Gupta. All rights reserved.</p>
