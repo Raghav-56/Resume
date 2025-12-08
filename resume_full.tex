@@ -178,13 +178,15 @@
 % Header with light background
 \begin{center}
     \headernamestyle{Raghav Gupta}\\[0.25cm]
-    \footnotesize
-    {\faMapMarker*} Chandigarh, India\contactdivider
-    \contactitem{faPhone}{tel:+917973457736}{+91 7973457736} \contactdivider
-    \contactitem{faEnvelope}{mailto:raghavrgupta56@gmail.com}{raghavrgupta56@gmail.com} \contactdivider
-    \contactitem{faLinkedin}{https://linkedin.com/in/raghav-gupta-035b4a292}{LinkedIn: linkedin.com/in/raghav-gupta-035b4a292} \contactdivider
-    \contactitem{faGithub}{https://github.com/Raghav-56}{GitHub: github.com/Raghav-56}
-    % (removed visible overlay here; invisible extraction text added at document end)
+    % Use a smaller size and force the contact row into a single centered box
+    \scriptsize
+    \makebox[\linewidth][c]{%
+        {\faMapMarker*} Chandigarh, India\contactdivider%
+        \contactitem{faPhone}{tel:+917973457736}{+91 7973457736} \contactdivider%
+        \contactitem{faEnvelope}{mailto:raghavrgupta56@gmail.com}{raghavrgupta56@gmail.com} \contactdivider%
+        \contactitem{faLinkedin}{https://linkedin.com/in/raghav-gupta-035b4a292}{LinkedIn: linkedin.com/in/raghav-gupta-035b4a292} \contactdivider%
+        \contactitem{faGithub}{https://github.com/Raghav-56}{GitHub: github.com/Raghav-56}%
+    }
 \end{center}
 
 
