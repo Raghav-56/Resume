@@ -9,6 +9,15 @@
 \usepackage{bookmark}
 \usepackage{fontawesome5}
 
+% Put ATS-friendly contact details into PDF metadata (helps parsers that read PDF info)
+\hypersetup{
+    pdfauthor={Raghav Gupta | +91 7973457736 | raghavrgupta56@gmail.com | linkedin.com/in/raghav-gupta-035b4a292 | github.com/Raghav-56},
+    pdftitle={Raghav Gupta --- Resume},
+    pdfsubject={Resume -- AI and MLOps Engineer},
+    pdfkeywords={Raghav Gupta, AI, MLOps, Resume, Python, C++}
+}
+
+% Color definitions
 \definecolor{primaryColor}{RGB}{30, 70, 160}
 \definecolor{secondaryColor}{RGB}{70, 90, 180}
 \definecolor{accentColor}{RGB}{100, 120, 200}
@@ -24,38 +33,64 @@
 \fi
 \usepackage[default, type1]{sourcesanspro}
 
+% Page formatting
 \AtBeginEnvironment{adjustwidth}{\partopsep0pt}
 \pagestyle{empty}
 \setcounter{secnumdepth}{0}
 \setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\raggedbottom
+\linespread{0.99}
 \setlength{\topskip}{0pt}
 \setlength{\columnsep}{0.15cm}
 
 % Section formatting
-	\titleformat{\section}{%
-    \needspace{4\baselineskip}%
-    \Large\color{primaryColor}%
+\titleformat{\section}{%
+\needspace{4\baselineskip}%
+\Large\color{primaryColor}%
 }{}{}{\textbf{#1}\titlerule[1.2pt]}[]
-% Tighter vertical spacing to fit more content
-    \titlespacing{\section}{0pt}{0.45cm}{0.25cm}
+\titlespacing{\section}{0pt}{0.40cm}{0.20cm}
+
 
 % Custom lists
+
 \newlist{achievementlist}{itemize}{1}
-\newlist{experiencelist}{itemize}{1}
+\setlist[achievementlist,1]{leftmargin=0.5cm, label={\textcolor{secondaryColor}{$\bullet$}}, topsep=0pt, itemsep=0.03cm, parsep=0.02cm}
+
+\newlist{experiencelist}{itemize}{2}
+\setlist[experiencelist,1]{leftmargin=0.5cm, label={\textcolor{primaryColor}{$\circ$}}, topsep=0pt, itemsep=0.03cm, parsep=0.02cm}
+
 \newlist{compactlist}{itemize}{1}
-\setlist[achievementlist]{leftmargin=0.5cm, label={\textcolor{secondaryColor}{$\bullet$}}, itemsep=0.05cm, parsep=0.05cm}
-\setlist[experiencelist]{leftmargin=0.5cm, label={\textcolor{primaryColor}{$\circ$}}, itemsep=0.05cm, parsep=0.05cm}
-\setlist[compactlist]{
-    itemsep=0.1cm,
-    parsep=0.05cm,
+\setlist[compactlist,1]{
+    topsep=0pt,
+    itemsep=0.05cm,
+    parsep=0.02cm,
     leftmargin=1.5em,
     label={\textcolor{secondaryColor}{$\bullet$}}
 }
 
+\newlist{subexperiencelist}{itemize}{1}
+\setlist[subexperiencelist,1]{
+    leftmargin=0.5cm,
+    label={\textcolor{accentColor}{\small\faCaretRight}},
+    topsep=0pt,
+    partopsep=0pt,
+    itemsep=0.03cm,
+    parsep=0pt
+}
+
+% Flag to indicate the current experience entry expects sub-experiences
+\newif\ifexperienceHasSub
+\experienceHasSubfalse
+
+
 % Custom commands
 \newcommand{\skill}[2]{\textbf{#1:} #2}
+
 \newcommand{\achievement}[1]{\textcolor{secondaryColor}{\faAngleRight} \hspace{0.05cm}#1}
+
 \newcommand{\daterange}[1]{\hfill\textcolor{secondaryColor}{\textit{#1}}}
+
 \NewDocumentCommand{\skillbar}{m m O{2.5cm}}{%
     \begingroup
     \setlength{\parskip}{0pt}
@@ -67,31 +102,64 @@
     \end{tikzpicture}\\[-0.2cm]
     \endgroup
 }
+
 \NewDocumentCommand{\contactitem}{m m m}{%
-    {\csname #1\endcsname} \href{#2}{#3}%
+    {\csname #1\endcsname}\,\href{#2}{#3}%
 }
-\newcommand{\contactdivider}{\hspace{0.2cm}$\cdot$\hspace{0.2cm}}
-\NewDocumentEnvironment{experienceentry}{m m m}{%
-    \textbf{#1} | \textit{#2} \daterange{#3}
+
+\newcommand{\contactdivider}{\hspace{0.2cm}~\textbar~\hspace{0.2cm}}
+
+\NewDocumentEnvironment{experienceentry}{s o m m m}{%
+    % Usage: either \begin{experienceentry}*{Title}{Org}{Dates}  (star)
+    % or \begin{experienceentry}[sub]{Title}{Org}{Dates} (optional marker), or plain \begin{experienceentry}{Title}{Org}{Dates}
+    % If star present or optional argument provided, mark that this entry may contain sub-experiences
+    \IfBooleanTF{#1}{\experienceHasSubtrue}{\IfValueTF{#2}{\experienceHasSubtrue}{\experienceHasSubfalse}}%
+    \noindent\begin{tabularx}{\linewidth}{@{}Xr@{}}
+            \textbf{#3} \ \textbar\ \textit{#4} & \textcolor{secondaryColor}{\textit{#5}} \\
+    \end{tabularx}
     \begin{experiencelist}
 }{%
     \end{experiencelist}
+    % reset flag after closing the experience entry
+    \experienceHasSubfalse
 }
+
+\NewDocumentEnvironment{subexperienceentry}{m m m}{%
+    % attach to parent list as an unlabeled item so grouping is obvious
+    \item[]%
+    % spacing before header depends on whether the parent marked it as having sub-experiences
+    \ifexperienceHasSub
+        \vspace{0pt}\noindent
+    \else
+        \vspace{0.06cm}\noindent
+    \fi
+    \begin{minipage}[t]{\linewidth}
+        {\small\textbf{#1}} \ \textbar\ \textit{#2} \daterange{#3}%
+        \begin{subexperiencelist}
+}{%
+        \end{subexperiencelist}
+    \end{minipage}\vspace{0.02cm}%
+}
+
 \NewDocumentEnvironment{educationentry}{m m}{%
     \textbf{#1} \daterange{#2}\\
 }{%
 }
+
 \NewDocumentEnvironment{skillsection}{m}{%
     \textbf{#1}\vspace{0.1cm} % Add small space after title
     \begin{compactlist}
 }{%
     \end{compactlist}
 }
+
 \newcommand{\experienceitem}[1]{\item[\textcolor{primaryColor}{\small\faCaretRight}] #1}
-\newcommand{\headernamestyle}[1]{{\fontsize{28pt}{32pt}\selectfont\textbf{#1}}}
+
+\newcommand{\headernamestyle}[1]{{\fontsize{27pt}{31pt}\selectfont\textbf{#1}}}
 
 % Compact skills helpers
-\newcommand{\skillsentry}[2]{\textbf{#1:} #2}
+\newcommand{\skillsentry}[2]{\textbf{#1:} {\RaggedRight #2}}
+\newcommand{\skillsdual}[3]{\textbf{#1:} \begin{tabular}[t]{@{}l@{}}#2\\#3\end{tabular}}
 \newenvironment{compactskills}{%
     \begingroup\small\RaggedRight\setlength{\parskip}{2pt}\setlength{\parindent}{0pt}%
     \hyphenpenalty=500 \exhyphenpenalty=500 \sloppy%
@@ -103,24 +171,31 @@
     \fill[lightGray, opacity=0.3] (current page.north west) rectangle ([yshift=-2.5cm]current page.north east);
 \end{tikzpicture}
 
+
+% Document content starts here
+
+
 % Header with light background
 \begin{center}
     \headernamestyle{Raghav Gupta}\\[0.25cm]
     \footnotesize
-    {\faMapMarker*} Zirakpur, Punjab, 140603 \contactdivider
+    {\faMapMarker*} Chandigarh, India\contactdivider
     \contactitem{faPhone}{tel:+917973457736}{+91 7973457736} \contactdivider
     \contactitem{faEnvelope}{mailto:raghavrgupta56@gmail.com}{raghavrgupta56@gmail.com} \contactdivider
     \contactitem{faLinkedin}{https://linkedin.com/in/raghav-gupta-035b4a292}{linkedin.com/in/raghav-gupta-035b4a292} \contactdivider
     \contactitem{faGithub}{https://github.com/Raghav-56}{github.com/Raghav-56}
+    % (removed visible overlay here; invisible extraction text added at document end)
 \end{center}
+
 
 % About / Introduction
 \section{About}
 \begin{minipage}{\linewidth}
-Third-year Engineering student working in AI and DevOps.
+AI \& MLOps Engineer and Engineering student.\\
 Fine-tuning LLMs \& traditional models; Deploying web services \& ML models; building RAG, ASR \& API pipelines; and Automation scripts for various things. 
 Fast learner, curious person.
 \end{minipage}
+
 
 % Education
 \section{Education}
@@ -128,49 +203,54 @@ Fast learner, curious person.
 \textit{University Institute of Engineering and Technology, Panjab University}
 % Stats/Achievements
 \begin{achievementlist}
-    \item CGPA: 8.35/10 (till 4th semester)
+    \item CGPA: 8.35/10
     \item Reliance Foundation Undergraduate Scholar
 \end{achievementlist}
 \end{educationentry}
 
-% Experience
-\section{Experience}
-\begin{experienceentry}{AI/Research Intern}{Design Innovation Centre, UIET}{Jan 2025 -- Oct 2025}
-    \item Developed computer vision pipelines using OpenCV, Ffmpeg, imgaug, etc. for keyframe extraction and video augmentation, supporting model training and making it more efficient.
-    \item Built and optimized facial emotion recognition systems using Action Unit detection with pretrained DL models, improving inference accuracy.
-    \item Researched and prototyped multimodal deep learning models (audio + vision) for enhanced emotion recognition accuracy.
-\end{experienceentry}
-
-\begin{experienceentry}{AI/ MLOps Developer}{Lafleurtech}{Jun 2025 -- Oct 2025}
-    \item Developed a local ASR multi-language transcription pipeline
-    \item Tested and fine-tuned multiple models including Whisper, NVIDIA Parakeet
-    \item Developed a system with speaker recognition and diarization, noise removal
-\end{experienceentry}
-
-\begin{experienceentry}{Open Source Backend Intern}{AISOC / PClub UIET}{July 2025 -- Aug 2025}
-    \item Engineered the model-hosting layer of PU-API, an internal API platform for consolidating deployment of DIC and university AI services with containerized inference endpoints.
-\end{experienceentry}
-
-\begin{experienceentry}{Projects}{Independent, Open Source \& Hackathons}{2020 -- Present}
-    \item \textbf{Open Source (GitHub):} Active contributor with 500+ commits across ML tools, backend systems, automation scripts, with clean commit structure.
-    \item \textbf{Hackathons – RAG Systems:} Designed and implemented various kinds of RAG system using FAISS, LangChain, and LLMs to extract insights from business documents, enabling automated decision support for industrial clients.
-    \item \textbf{Cloud Deployment – Oracle:} Deployed team project on Oracle Cloud VM with network configuration, SSH access setup, and systemd service automation for zero-downtime reboot recovery.
-    \item \textbf{Model Deployment – GCP:} Containerized and deployed ML model on Google Cloud Platform using Docker.
-\end{experienceentry}
 
 % Technical Skills
 \section{Technical Skills}
 \begin{compactskills}
-\skillsentry{Programming languages}{Python, C++, C, Scripting (bash, ps1, python), JavaScript, TypeScript, LaTeX, Rust, Haskell, SQL, lisp/Racket, WASM}\\
-\skillsentry{Libraries/Frameworks}{PyTorch, TensorFlow, HuggingFace, OpenCV, Whisper, ffmpeg, NVIDIA  NeMo, Scikit-learn, LLAMA factory}\\
+\skillsentry{Programming languages}{Proficient: Python, C++, Scripting (bash, ps1, python), SQL; Familiar: TypeScript, C, LaTeX, Rust, Haskell, lisp/Racket}\\
+\skillsentry{Libraries/Frameworks}{PyTorch, TensorFlow, HuggingFace, OpenCV, Whisper, ffmpeg, NVIDIA  NeMo, Scikit-learn, LLAMA factory, WASM}\\
 \skillsentry{Dev Ops}{Git, Docker, Oracle cloud, Google cloud platform, GitHub Actions, MLflow, Weights \& Biases, Uvicorn, FastAPI}\\
 \skillsentry{others}{ Working with CLI, linux OS, remote cloud servers(ssh config, key management), native UV (environment and dependency management), supermemory}\\
 \end{compactskills}
+
+
+% Experience
+\section{Experience}
+
+\begin{experienceentry}{AI/Research Intern}{Design Innovation Centre, UIET}{Jan 2025 -- Oct 2025}
+    \item Developed computer vision pipelines using OpenCV, Ffmpeg, Openface, etc. for keyframe and Action Unit detection and extraction, supporting model training, making it more efficient and generalizable.
+    \item Developed systems with Image/video augmentation techniques/software including imgaug, GAN based to enhance dataset diversity and model robustness.
+    \begin{subexperienceentry}{Open Source Backend Intern}{AISOC / PClub UIET}{July 2025 -- Aug 2025}
+        \item Engineered the model-hosting layer of PU-API, an internal API platform for consolidating deployment of DIC AI services with containerized inference endpoints.
+    \end{subexperienceentry}
+\end{experienceentry}
+
+\begin{experienceentry}{AI/ MLOps Developer}{Lafleurtech}{Jun 2025 -- Nov 2025}
+    \item Developed a local ASR transcription pipeline for meeting manager system. A system with speaker recognition and diarization, noise removal and other pre and post-processing steps.
+    \item Tested multiple models including Whisper, NVIDIA Parakeet and fine-tuned them for Indian languages.
+\end{experienceentry}
+
+\begin{experienceentry}{Projects}{Open Source, Independent \& Hackathons}{2020 -- Present}
+    \item \textbf{Open Source (GitHub):} Long time active contributor with commits across ML tools, backend systems, automation scripts, with clean commit and contribution structure.
+    \item \textbf{Hackathons – RAG Systems:} Designed and implemented various kinds of RAG system, using LangChain, supermemory, mem0, FAISS, and LLMs from Gemini, HuggingFace, Open-router for various hackathon and demonstration tasks.
+    \item \textbf{Automation Scripts:} Created various automation scripts for daily tasks, including file organization, opening multiple applications in particular states, contact list to vsc, and system monitoring using Python and bash scripting.
+    \item \textbf{Cloud Deployment – Oracle:} Deployed a team project about assisting in software development on Oracle Cloud VM with network configuration, SSH access setup, and systemd service automation for zero-downtime reboot recovery.
+    \item \textbf{Model Deployment – GCP:} Containerized and deployed ML model and corresponding server on Google Cloud Platform using Docker.
+\end{experienceentry}
+
 
 % Additional Information
 \section{Additional Information}
 \skill{Soft Skills}{Teamwork, Technical Communication \& Documentation, Problem-solving, Critical Thinking}\\
 \skill{Research Interests}{Interpretability, Self-improving Agents, Multimodal Alignment, Agentic Workflows}
 
+
+% Invisible plain-text contact (for parsers/extraction).
+\noindent\makebox[0pt][l]{\textcolor{white}{\footnotesize\texttt{Chandigarh, India | +91 7973457736 | raghavrgupta56@gmail.com | linkedin.com/in/raghav-gupta-035b4a292 | github.com/Raghav-56}}}
 
 \end{document}
