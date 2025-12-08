@@ -100,7 +100,7 @@
 \begin{document}
 
 \begin{tikzpicture}[remember picture, overlay]
-  \fill[lightGray, opacity=0.3] (current page.north west) rectangle ([yshift=-2.5cm]current page.north east);
+    \fill[lightGray, opacity=0.3] (current page.north west) rectangle ([yshift=-2.5cm]current page.north east);
 \end{tikzpicture}
 
 % Header with light background
@@ -117,56 +117,60 @@
 % About / Introduction
 \section{About}
 \begin{minipage}{\linewidth}
-Second-year IT engineering student focused on practical AI: fine-tuning LLMs, building RAG + ASR pipelines, and multimodal emotion recognition. Fast learner, shipping usable systems early.
+Third-year Engineering student working in AI and DevOps.
+Fine-tuning LLMs \& traditional models; Deploying web services \& ML models; building RAG, ASR \& API pipelines; and Automation scripts for various things. 
+Fast learner, curious person.
 \end{minipage}
 
 % Education
 \section{Education}
 \begin{educationentry}{Bachelor of Engineering in Information Technology}{2023 -- 2027}
 \textit{University Institute of Engineering and Technology, Panjab University}
+% Stats/Achievements
 \begin{achievementlist}
+    \item CGPA: 8.35/10 (till 4th semester)
     \item Reliance Foundation Undergraduate Scholar
 \end{achievementlist}
 \end{educationentry}
 
 % Experience
 \section{Experience}
-\begin{experienceentry}{AI/ML Developer}{Design Innovation Centre (DIC)}{Jan 2024 -- Present}
+\begin{experienceentry}{AI/Research Intern}{Design Innovation Centre, UIET}{Jan 2025 -- Oct 2025}
     \item Developed computer vision pipelines using OpenCV, Ffmpeg, imgaug, etc. for keyframe extraction and video augmentation, supporting model training and making it more efficient.
     \item Built and optimized facial emotion recognition systems using Action Unit detection with pretrained DL models, improving inference accuracy.
-    \item Fine-tuned and deployed domain-specific Large Language Models (LLMs) using HuggingFace Transformers and PyTorch for document understanding and response generation.
     \item Researched and prototyped multimodal deep learning models (audio + vision) for enhanced emotion recognition accuracy.
 \end{experienceentry}
 
-\begin{experienceentry}{AI Intern}{Lafleurtech}{Jun 2024 -- Aug 2024}
-    \item Developed a local ASR transcription pipeline integrating Whisper and NVIDIA Parakeet models with noise reduction, speaker diarization, and batching for efficient processing.
+\begin{experienceentry}{AI/ MLOps Developer}{Lafleurtech}{Jun 2025 -- Oct 2025}
+    \item Developed a local ASR multi-language transcription pipeline
+    \item Tested and fine-tuned multiple models including Whisper, NVIDIA Parakeet
+    \item Developed a system with speaker recognition and diarization, noise removal
 \end{experienceentry}
 
-\begin{experienceentry}{Open Source Backend Intern}{AISOC / PClub UIET}{July 2024 -- Aug 2024}
-    \item Engineered the model-hosting layer of PU-API, an internal API platform consolidating deployment of DIC and university AI services (LLMs, CV, ASR) with containerized inference endpoints.
+\begin{experienceentry}{Open Source Backend Intern}{AISOC / PClub UIET}{July 2025 -- Aug 2025}
+    \item Engineered the model-hosting layer of PU-API, an internal API platform for consolidating deployment of DIC and university AI services with containerized inference endpoints.
 \end{experienceentry}
 
-\begin{experienceentry}{ML Developer}{Hackathons – RaG Systems}{Feb 2024}
-    \item Designed and implemented a RaG system using FAISS and LLMs to extract insights from business documents, enabling automated decision support for industrial clients.
-\end{experienceentry}
-
-\begin{experienceentry}{Open Source Contributor}{GitHub Projects}{2020 -- Present}
-    \item Active GitHub contributor with 500+ commits in the past years across ML tools, automation scripts, and student-focused repositories.
+\begin{experienceentry}{Projects}{Independent, Open Source \& Hackathons}{2020 -- Present}
+    \item \textbf{Open Source (GitHub):} Active contributor with 500+ commits across ML tools, backend systems, automation scripts, with clean commit structure.
+    \item \textbf{Hackathons – RAG Systems:} Designed and implemented various kinds of RAG system using FAISS, LangChain, and LLMs to extract insights from business documents, enabling automated decision support for industrial clients.
+    \item \textbf{Cloud Deployment – Oracle:} Deployed team project on Oracle Cloud VM with network configuration, SSH access setup, and systemd service automation for zero-downtime reboot recovery.
+    \item \textbf{Model Deployment – GCP:} Containerized and deployed ML model on Google Cloud Platform using Docker.
 \end{experienceentry}
 
 % Technical Skills
 \section{Technical Skills}
 \begin{compactskills}
-\skillsentry{Programming}{Python, C, C++, JavaScript, TypeScript, Rust, Haskell, SQL}\\
-\skillsentry{Libraries/Frameworks}{PyTorch, TensorFlow, HuggingFace, OpenCV, Whisper, NVIDIA Parakeet, Scikit-learn, FAISS}\\
-\skillsentry{Dev / Ops}{Git, Docker, GitHub Actions, FastAPI, REST, VS Code, WSL, Jupyter, LaTeX}\\
-\skillsentry{Domain}{ASR, Multimodal Emotion Recognition, LLM Fine-tuning, RAG, Video Processing, Model Hosting}
+\skillsentry{Programming languages}{Python, C++, C, Scripting (bash, ps1, python), JavaScript, TypeScript, LaTeX, Rust, Haskell, SQL, lisp/Racket, WASM}\\
+\skillsentry{Libraries/Frameworks}{PyTorch, TensorFlow, HuggingFace, OpenCV, Whisper, ffmpeg, NVIDIA  NeMo, Scikit-learn, LLAMA factory}\\
+\skillsentry{Dev Ops}{Git, Docker, Oracle cloud, Google cloud platform, GitHub Actions, MLflow, Weights \& Biases, Uvicorn, FastAPI}\\
+\skillsentry{others}{ Working with CLI, linux OS, remote cloud servers(ssh config, key management), native UV (environment and dependency management), supermemory}\\
 \end{compactskills}
 
 % Additional Information
 \section{Additional Information}
-\skill{Research Interests}{Speech Processing, Audio Analysis, Deep Learning, Interpretability, Self-evolving Agents, Just-in-Time Generation}\\[-0.05cm]
-\skill{Soft Skills}{Teamwork, Problem-solving, Critical Thinking, Communication}
+\skill{Soft Skills}{Teamwork, Technical Communication \& Documentation, Problem-solving, Critical Thinking}\\
+\skill{Research Interests}{Interpretability, Self-improving Agents, Multimodal Alignment, Agentic Workflows}
 
 
 \end{document}
