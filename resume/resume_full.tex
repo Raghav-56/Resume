@@ -1,0 +1,231 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Package configuration
+\usepackage[dvipsnames]{xcolor}
+\usepackage[ignoreheadfoot,top=1.25cm,bottom=1.0cm,left=1.0cm,right=1.0cm,footskip=1.0cm]{geometry}
+\usepackage[explicit]{titlesec}
+\usepackage{tabularx,array,enumitem,needspace,iftex,ragged2e,setspace,tikz,microtype,xparse}
+% multicol, could improve the Technical Skills section by displaying skill rows in two columns, saving 2–3 lines of vertical space.
+% lastpage, ifthen, changepage
+\usepackage[colorlinks=true,urlcolor=primaryColor,linkcolor=primaryColor]{hyperref}
+\usepackage{bookmark}
+\usepackage{fontawesome5}
+
+% Put ATS-friendly contact details into PDF metadata (helps parsers that read PDF info)
+\hypersetup{
+    pdfauthor={Raghav Gupta | raghavrgupta56@gmail.com | LinkedIn: linkedin.com/in/raghav56/ | GitHub: github.com/Raghav-56 | X(twitter): x.com/Raghav_rgup},
+    pdftitle={Raghav Gupta --- Resume},
+    pdfsubject={Resume -- AI and MLOps Engineer},
+    pdfkeywords={Raghav Gupta, AI, MLOps, Resume, Python, C++}
+}
+
+% Color definitions
+\definecolor{primaryColor}{RGB}{30, 70, 160}
+\definecolor{secondaryColor}{RGB}{70, 90, 180}
+\definecolor{accentColor}{RGB}{100, 120, 200}
+\definecolor{lightGray}{RGB}{240, 240, 240}
+
+% Font configuration
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+\usepackage[default, type1]{sourcesanspro}
+
+% Page formatting
+% \AtBeginEnvironment{adjustwidth}{\partopsep0pt}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\raggedbottom
+\linespread{1.02}
+\setlength{\topskip}{0pt}
+% \setlength{\columnsep}{0.15cm}
+
+% Section formatting
+\titleformat{\section}{%
+\needspace{4\baselineskip}%
+\Large\color{primaryColor}%
+}{}{}{\textbf{#1}\titlerule[1.2pt]}[]
+\titlespacing{\section}{0pt}{0.40cm}{0.20cm}
+
+
+% Custom lists
+
+\newlist{achievementlist}{itemize}{1}
+\setlist[achievementlist,1]{leftmargin=0.5cm, label={\textcolor{secondaryColor}{$\bullet$}}, topsep=0pt, itemsep=0.03cm, parsep=0.02cm}
+
+\newlist{experiencelist}{itemize}{2}
+\setlist[experiencelist,1]{leftmargin=0.5cm, label={\textcolor{primaryColor}{$\circ$}}, topsep=0pt, itemsep=0.03cm, parsep=0.02cm}
+
+\newlist{subexperiencelist}{itemize}{1}
+\setlist[subexperiencelist,1]{
+    leftmargin=0.5cm,
+    label={\textcolor{accentColor}{\small\faCaretRight}},
+    topsep=0pt,
+    partopsep=0pt,
+    itemsep=0.03cm,
+    parsep=0pt
+}
+
+% Flag to indicate the current experience entry expects sub-experiences
+\newif\ifexperienceHasSub
+\experienceHasSubfalse
+
+
+% Custom commands
+\newcommand{\skill}[2]{\textbf{#1:} #2}
+
+% \newcommand{\achievement}[1]{\textcolor{secondaryColor}{\faAngleRight} \hspace{0.05cm}#1}
+
+\newcommand{\daterange}[1]{\hfill\textcolor{secondaryColor}{\textit{#1}}}
+
+\NewDocumentCommand{\contactitem}{m m m}{%
+    {\csname #1\endcsname}\,\href{#2}{#3}%
+}
+
+\newcommand{\contactdivider}{\hspace{0.2cm}~\textbar~\hspace{0.2cm}}
+
+\NewDocumentEnvironment{experienceentry}{s o m m m}{%
+    % Usage: either \begin{experienceentry}*{Title}{Org}{Dates}  (star)
+    % or \begin{experienceentry}[sub]{Title}{Org}{Dates} (optional marker), or plain \begin{experienceentry}{Title}{Org}{Dates}
+    % If star present or optional argument provided, mark that this entry may contain sub-experiences
+    \IfBooleanTF{#1}{\experienceHasSubtrue}{\IfValueTF{#2}{\experienceHasSubtrue}{\experienceHasSubfalse}}%
+    \noindent\begin{tabularx}{\linewidth}{@{}Xr@{}}
+            \textbf{#3} \ \textbar\ \textit{#4} & \textcolor{secondaryColor}{\textit{#5}} \\
+    \end{tabularx}
+    \begin{experiencelist}
+}{%
+    \end{experiencelist}
+    % reset flag after closing the experience entry
+    \experienceHasSubfalse
+}
+
+\NewDocumentEnvironment{subexperienceentry}{m m m}{%
+    % attach to parent list as an unlabeled item so grouping is obvious
+    \item[]%
+    % spacing before header depends on whether the parent marked it as having sub-experiences
+    \ifexperienceHasSub
+        \vspace{0pt}\noindent
+    \else
+        \vspace{0.06cm}\noindent
+    \fi
+    \begin{minipage}[t]{\linewidth}
+        {\small\textbf{#1}} \ \textbar\ \textit{#2} \daterange{#3}%
+        \begin{subexperiencelist}
+}{%
+        \end{subexperiencelist}
+    \end{minipage}\vspace{0.02cm}%
+}
+
+\NewDocumentEnvironment{educationentry}{m m}{%
+    \textbf{#1} \daterange{#2}\\
+}{%
+}
+
+% \newcommand{\experienceitem}[1]{\item[\textcolor{primaryColor}{\small\faCaretRight}] #1}
+
+\newcommand{\headernamestyle}[1]{{\fontsize{27pt}{31pt}\selectfont\textbf{#1}}}
+
+% Compact skills helpers
+\newcommand{\skillsentry}[2]{\textbf{#1:} {\RaggedRight #2}}
+
+\newenvironment{compactskills}{%
+    \begingroup\small\RaggedRight\setlength{\parskip}{2pt}\setlength{\parindent}{0pt}%
+    \hyphenpenalty=500 \exhyphenpenalty=500 \sloppy%
+}{\par\endgroup}
+
+\begin{document}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[lightGray, opacity=0.3] (current page.north west) rectangle ([yshift=-2.5cm]current page.north east);
+\end{tikzpicture}
+
+
+% Document content starts here
+
+
+% Header with light background
+\begin{center}
+    \headernamestyle{Raghav Gupta}\\[0.25cm]
+    % Use a smaller size and force the contact row into a single centered box
+    \scriptsize
+    \makebox[\linewidth][c]{%
+        {\faMapMarker*} Chandigarh, India\contactdivider%
+        %\contactitem{faPhone}{tel:+917973457736}{+91 7973457736} \contactdivider%
+        \contactitem{faEnvelope}{mailto:raghavrgupta56@gmail.com}{raghavrgupta56@gmail.com} \contactdivider%
+        \contactitem{faLinkedin}{https://linkedin.com/in/raghav56/}{LinkedIn: linkedin.com/in/raghav56/} \contactdivider%
+        \contactitem{faGithub}{https://github.com/Raghav-56}{GitHub: github.com/Raghav-56} \contactdivider%
+        \contactitem{faTwitter}{https://x.com/Raghav_rgup}{X: x.com/Raghav\_rgup}%
+    }
+\end{center}
+
+
+% About / Introduction
+\section{About}
+AI \& DevOps Engineer. Fast learner, curious person. Published working packages on \href{https://pypi.org/user/Raghav-56/}{PyPI} and \href{https://www.npmjs.com/~raghav-56}{npm}.\\
+Active work across agentic systems with RAG, ASR and speech recognition pipelines, computer vision models, inference infrastructure, and automation tooling. 
+Experience in fine-tuning LLMs \& traditional models; deploying web and ML services over cloud platforms.
+
+% Education
+\section{Education}
+\begin{educationentry}{Bachelor of Engineering in Information Technology}{2023 -- 2027}
+\textit{University Institute of Engineering and Technology, Panjab University}
+% Stats/Achievements
+\begin{achievementlist}
+    \item CGPA: 8.48/10 (as of Semester 5)
+    \item Reliance Foundation Undergraduate Scholar
+\end{achievementlist}
+\end{educationentry}
+
+
+% Technical Skills
+\section{Technical Skills}
+\begin{compactskills}
+\skillsentry{Programming Languages}{Proficient: Python, C++, Scripting (Bash(.sh), PowerShell (.ps1)), Lisp/Racket, SQL; Familiar: TypeScript, C, LaTeX, Rust, Haskell, Scala}\\
+\skillsentry{Libraries/Frameworks}{PyTorch, TensorFlow, MCP, HuggingFace, LangChain, OpenCV, Whisper, FFmpeg, Streamlit, Scikit-learn, NVIDIA NeMo, LLaMA-Factory, WASM}\\
+\skillsentry{DevOps \& Deployment}{Git, Docker, Oracle Cloud Platform, Google Cloud Platform, GitHub Actions, MLflow, Weights \& Biases, uvicorn, FastAPI}\\
+\skillsentry{Others}{Working with CLI; Linux OS; remote \& cloud servers (SSH config, key management); native UV (environment and dependency management)}\\
+\end{compactskills}
+
+
+% Experience
+\section{Experience}
+
+\begin{experienceentry}*{AI/Research Intern }{Design Innovation Centre, UIET}{January 2025 -- October 2025}
+    \item Developed computer vision pipelines using OpenCV, FFmpeg, OpenFace for facial keyframe and Action Unit detection and extraction.
+    \item Contributed to training and evaluation of Voice and LLM models for Multimodal Emotion Recognition.
+    \item Implemented media augmentation pipelines using traditional and GAN-based techniques to enhance dataset diversity and robustness.
+    \begin{subexperienceentry}{Backend Intern}{AISOC / PClub UIET}{July 2025 -- August 2025}
+        \item Engineered the model-hosting layer of \href{https://puapi.vercel.app/}{PU-API}, a unified platform for deployment of AI services and inference endpoints.
+    \end{subexperienceentry}
+\end{experienceentry}
+
+\begin{experienceentry}{AI/MLOps Developer}{Lafleurtech}{June 2025 -- November 2025}
+    \item Developed a local ASR transcription pipeline for \href{https://sanketai.co.in/}{SanketAI}, a meeting manager system, featuring speaker recognition, diarization, noise removal, and post-processing.
+    \item Evaluated and fine-tuned models including Whisper, NVIDIA Parakeet for Indian languages speech recognition.
+\end{experienceentry}
+
+\begin{experienceentry}{Projects}{Open Source, Independent \& Hackathons}{2020 -- Present}
+    \item \textbf{Published Tools (\href{https://pypi.org/user/Raghav-56/}{PyPI} \& \href{https://www.npmjs.com/~raghav-56}{npm}):} \href{https://pypi.org/project/git-surgeon-cli/}{\textit{git-surgeon-cli}} (PyPI): Surgical git history rewriting with message scrub, blob scrub, merge flatten, commit filtering, and automatic backup/undo. \href{https://www.npmjs.com/package/@raghav-56/flexoki-mcp-server}{\textit{flexoki-mcp-server}} (npm): MCP server for Flexoki theme generation with Tailwind config generation and framework-specific components (React, Next.js, Vue, HTML).
+    \item \textbf{Open Source (GitHub):} Built and experimented with 20+ original public repositories across Python, TypeScript, C++, ML tooling, MCP servers, and automation scripts. Contributed to projects including \href{https://github.com/openMF/community-ai}{openMF Community AI} for Mifos ecosystem support.
+    \item \textbf{Agentic Systems:} Implemented research-oriented Agentic systems with RAG, MCP, and multiple modal providers. Shipped tools like \href{https://github.com/Raghav-56/RLM-agent}{RLM-agent} (CLI, FastAPI, Web UI) for LLM orchestration; built additional CLI, FastAPI, and Streamlit interfaces with session persistence (memory) and streaming responses.
+    \item \textbf{Cloud Deployment, Oracle \& GCP:} Deployed multiple Web-services and docker instances on Oracle Cloud, using Systemd, and built an Open-Sora v2 (11B) text-to-video API on Google Cloud Vertex AI with async job orchestration and GCS output pipeline.
+\end{experienceentry}
+
+
+% Additional Information
+\section{Additional Information}
+\skill{Soft Skills}{Teamwork \& Leadership, Technical Communication \& Documentation, Problem-solving, Critical Thinking}\\[0.05cm]
+\skill{Work/Research Interests}{Alignment via Interpretability, Inference Infra \& DevOps, Systems Programming, Continual Learning, Multimodality, System Design}\\[0.05cm]
+% \skill{Pursuits}{Competitive debating (DebSoc, UIET); Recreational mathematics; Reading}
+
+
+% % Invisible plain-text contact (for parsers/extraction).
+% \noindent\makebox[0pt][l]{\textcolor{white}{\footnotesize\texttt{Chandigarh, India | +91 7973457736 | raghavrgupta56@gmail.com | LinkedIn:  linkedin.com/in/raghav56/| GitHub: github.com/Raghav-56}}}
+
+\end{document}

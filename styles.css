@@ -311,6 +311,11 @@ header p {
     background-size: contain;
 }
 
+.twitter-link::before {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231e46a0"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.727l-5.1-6.47-5.833 6.47H2.423l7.723-8.835L1.228 2.25h6.886l4.6 6.447 5.409-6.447zM17.15 18.345h1.828L5.881 4.12H3.967l13.183 14.225z"/></svg>') no-repeat;
+    background-size: contain;
+}
+
 
 footer {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
