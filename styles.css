@@ -1,13 +1,23 @@
+/* Self-hosted Inter — matches raghav56.tech (no Google Fonts CDN) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url('fonts/inter-var.woff2') format('woff2');
+}
+
 :root {
-    --primary-color: rgb(30, 70, 160);
-    --secondary-color: rgb(70, 90, 180);
-    --accent-color: rgb(100, 120, 200);
-    --light-gray: rgb(240, 240, 240);
-    --text-primary: #1a1a1a;
-    --text-secondary: #666;
-    --background: #f8f9fb;
+    /* Palette aligned with the raghav56.tech "professional-light" theme */
+    --primary-color: #1d4ed8;
+    --secondary-color: #1e40af;
+    --accent-color: #3b82f6;
+    --light-gray: #f7f7f5;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --background: #f7f7f5;
     --white: #ffffff;
-    
+
     --font-family-primary: 'Inter', 'Segoe UI', 'Helvetica Neue', sans-serif;
     --font-weight-light: 300;
     --font-weight-regular: 400;
@@ -65,7 +75,7 @@ body {
 }
 
 header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%), #1e46a0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%), #1d4ed8;
     color: var(--white);
     padding: var(--space-3xl) var(--space-2xl);
     text-align: center;
@@ -89,6 +99,20 @@ header::before {
 header > * {
     position: relative;
     z-index: 1;
+}
+
+.site-backlink {
+    position: absolute;
+    top: var(--space-lg);
+    left: var(--space-2xl);
+    color: var(--white);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    opacity: 0.85;
+}
+.site-backlink:hover {
+    opacity: 1;
+    text-decoration: underline;
 }
 
 header h1 {
@@ -210,7 +234,7 @@ header p {
     align-items: center;
     gap: var(--space-sm);
     padding: var(--space-md) var(--space-xl);
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%), #1e46a0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%), #1d4ed8;
     color: var(--white);
     text-decoration: none;
     border-radius: var(--radius-md);
@@ -272,7 +296,7 @@ header p {
     align-items: center;
     gap: var(--space-sm);
     font-size: var(--font-size-base);
-    color: var(--primary-color), #1e46a0;
+    color: var(--primary-color), #1d4ed8;
     text-decoration: none;
     padding: var(--space-md) var(--space-lg);
     border-radius: var(--radius-md);
